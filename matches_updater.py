@@ -1,6 +1,7 @@
 import requests
 
 import app
+from app import Bet
 
 
 def set_earn(user_to_bet, winners, losers, earn_name):
@@ -47,8 +48,10 @@ if __name__ == "__main__":
             for user in user_to_bet:
                 bet = user_to_bet[user]
                 if bet.home_score == home_score and bet.away_score == away_score:
+                    bet.score_win = True
                     score_winners.append(user)
                 else:
+                    bet.score_win = False
                     score_losers.append(user)
             set_earn(user_to_bet, score_winners, score_losers, "score_earn")
 
@@ -59,8 +62,10 @@ if __name__ == "__main__":
                 if sign(bet.home_score - bet.away_score) == sign(
                     home_score - away_score
                 ):
+                    bet.outcome_win = True
                     outcome_winners.append(user)
                 else:
+                    bet.outcome_win = False
                     outcome_losers.append(user)
             set_earn(user_to_bet, outcome_winners, outcome_losers, "outcome_earn")
 

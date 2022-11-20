@@ -271,12 +271,12 @@ class Bet:
         if hasattr(self, "score_earn"):
             score_earn_str = "精确比分 " + (
                 f":white_check_mark: : 赚 {self.score_earn:.2f} 元"
-                if self.score_earn >= 0
+                if self.score_win
                 else f":x: : 赔 {-self.score_earn:.2f} 元"
             )
             outcome_earn_str = "胜负关系 " + (
                 f":white_check_mark: : 赚 {self.outcome_earn:.2f} 元"
-                if self.outcome_earn >= 0
+                if self.outcome_win
                 else f":x: : 赔 {-self.outcome_earn:.2f} 元"
             )
             result += f"\n{score_earn_str}, {outcome_earn_str}"
@@ -375,7 +375,7 @@ class Match:
         return self.status == "completed"
 
     def is_penalty_resolved(self):
-        return self.home_penalties is not None
+        return self.is_knockout() and self.home_goals == self.away_goals
 
     def get_dt_str_in_beijing_time(self):
         return self.dt.astimezone(
